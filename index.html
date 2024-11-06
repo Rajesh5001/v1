@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QDocs Quick Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <img src="v.png" alt="Logo">
+            <input id="search-input" type="text" name="search" placeholder="Enter document name">
+            <button onclick="searchDocuments()">Search</button>
+        </div>
+        <div id="error-message" class="error-message"></div>
+        <div id="document-count"></div>
+		
+        <!-- Table to display the results -->
+        <table id="data-table" style="display:none">
+            <thead>
+                <tr>
+                    <th>Document ID</th>
+                    <th>Document Name</th>
+                    <th>Life Cycle</th>
+                    <th>Document Type</th>
+                    <th>Document Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be inserted dynamically here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

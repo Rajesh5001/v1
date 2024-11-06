@@ -1,0 +1,134 @@
+body {
+    font-family: 'Arial-Black';
+    background-color: #f4f4f9;
+    color: #333;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* height: 100vh; */
+    /* margin: 0; */
+}	
+
+
+
+img{
+
+	width: 400px;
+	display: block;
+	margin-left: auto;
+	margin-right:auto ;
+	margin-top:150px ;
+	padding-bottom: 10px;
+}
+
+/* Table container styling */
+.table-container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 90%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: none; /* Initially hidden */
+}
+
+/* Header styling */
+th {
+    background-color: #2e7d32; /* Dark green color for headers */
+    color: #fff;
+    padding: 12px 15px;
+    font-weight: bold;
+}
+
+/* Cell styling */
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Row styling */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Table responsive */
+@media (max-width: 768px) {
+    th, td {
+        padding: 10px;
+    }
+}
+
+.button:hover {
+	background-color: #357ae8;
+}
+.error-message {
+	color: red;
+	margin-top: 10px;
+}
+.results {
+	margin-top: 20px;
+	text-align: left;
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid #ddd;
+	padding: 10px;
+	background-color: #fff;
+}
+input{
+
+	display: -webkit-inline-flex;
+	margin-left:auto;
+	margin-right: auto;
+	padding: 15px;
+	width: 350px;
+	margin-bottom: 10px;
+	border: ridge 1px grey;
+	border-radius: 2px;
+	background-color: ghostwhite;
+	transition: width 2s
+}
+
+input:hover {
+  width: 500px;
+  
+}
+
+div{
+	margin-top: 7px;
+    text-align: center;
+
+}
+/* button{ */
+	/* border: solid 1px; */
+	/* border-color: grey; */
+	/* padding:5px ; */
+	/* padding: 15px; */
+	
+	/* border-style: none; */
+
+/* } */
+
+button {
+    padding: 15px;
+    border-style: none;
+    background-color: #2e7d32;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #357ae8;
+}
