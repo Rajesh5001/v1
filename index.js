@@ -54,7 +54,7 @@ async function searchDocuments() {
     }
 
     try {
-        const apiUrl = `https://cors-anywhere.herokuapp.com/https://partnersi-prana4life-quality.veevavault.com/api/v24.2/objects/documents?search=${encodeURIComponent(searchInput)} &scope=contents`;
+       const apiUrl = `https://cors-anywhere.herokuapp.com/https://partnersi-prana4life-quality.veevavault.com/api/v24.2/objects/documents?search=${encodeURIComponent(searchInput)}&scope=all`;
 
         const response = await fetch(apiUrl, {
             method: 'GET',
