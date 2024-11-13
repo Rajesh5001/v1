@@ -21,14 +21,15 @@ async function performLogin() {
             }
         );
 
-        if (!loginResponse.ok) {
-            const errorText = await loginResponse.text();
-            throw new Error(`Login failed: ${errorText}`);
-        }
-
         const loginData = await loginResponse.json();
-        sessionId = loginData.sessionId;  // Store sessionId
+        
+        if (loginResponse.ok && loginData.sessionId) {
+            sessionId = loginData.sessionId;  // Store sessionId
+        } else {
+            throw new Error(`Login warning: ${JSON.stringify(loginData)}`);
+        }
     } catch (error) {
+        console.error(error);
         errorMessage.innerText = error.message;
     }
 }
@@ -38,13 +39,13 @@ async function searchDocuments() {
     const errorMessage = document.getElementById('error-message');
     const dataTable = document.getElementById('data-table');
     const dataTableBody = dataTable.getElementsByTagName('tbody')[0];
-    const documentCount = document.getElementById('document-count');
+    const documentCount = document.getElementById('document-count'); // Element to display document count
 
     if (!searchInput) {
         errorMessage.innerText = 'Please Enter a Document Name.';
         dataTableBody.innerHTML = '';
         dataTable.style.display = 'none';
-        documentCount.innerText = '';
+        documentCount.innerText = ''; // Clear the document count if no input
         return;
     }
 
@@ -54,7 +55,7 @@ async function searchDocuments() {
     }
 
     try {
-       const apiUrl = `https://cors-anywhere.herokuapp.com/https://partnersi-prana4life-quality.veevavault.com/api/v24.2/objects/documents?search=${encodeURIComponent(searchInput)}&scope=all`;
+        const apiUrl = `https://cors-anywhere.herokuapp.com/https://partnersi-prana4life-quality.veevavault.com/api/v24.1/query?q=select id,document_number__v, name__v, lifecycle__v, status__v, type__v FROM documents find( '${searchInput}' scope content)`;
 
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -64,47 +65,52 @@ async function searchDocuments() {
             },
         });
 
-        if (!response.ok) {
-            throw new Error('Search failed. Please try again.');
-        }
-
         const data = await response.json();
+        console.log('data:', data);
 
-        if (data.size === 0 || !data.documents || !Array.isArray(data.documents)) {
+        // Check if data contains documents
+        if (!data.data || data.data.length === 0) {
             errorMessage.innerText = 'No documents found.';
             dataTableBody.innerHTML = '';
             dataTable.style.display = 'none';
+            documentCount.innerText = ''; // Clear document count if no documents found
             return;
         }
 
+        // Clear previous results
         dataTableBody.innerHTML = '';
         errorMessage.innerText = '';
-        documentCount.innerText = `Number of Available Documents: ${data.size}`;
 
-        data.documents.forEach(document => {
+        // Update the document count on the UI based on the length of the data array
+        documentCount.innerText = `Number of Available Documents: ${data.data.length}`;
+
+        // Populate the table with document data
+        data.data.forEach(document => {
             const row = dataTableBody.insertRow();
 
             const documentIdCell = row.insertCell(0);
-            const documentLink = `https://partnersi-prana4life-quality.veevavault.com/ui/#doc_info/${document.document.id}/1/0?newTvsl=true&idx=1&pt=rl`;
+            const documentLink = `https://partnersi-prana4life-quality.veevavault.com/ui/#doc_info/${document.id}/1/0?newTvsl=true&idx=1&pt=rl`;
 
-            documentIdCell.innerHTML = `<a href="${documentLink}" target="_blank">${document.document.id || 'N/A'}</a>`;
+            documentIdCell.innerHTML = `<a href="${documentLink}" target="_blank">${document.document_number__v || 'N/A'}</a>`;
 
             const documentNameCell = row.insertCell(1);
-            documentNameCell.innerHTML = `<a href="${documentLink}" target="_blank">${document.document.name__v || 'N/A'}</a>`;
+            documentNameCell.innerHTML = `<a href="${documentLink}" target="_blank">${document.name__v || 'N/A'}</a>`;
 
             const lifeCycleCell = row.insertCell(2);
-            lifeCycleCell.innerText = document.document.lifecycle__v || 'N/A';
+            lifeCycleCell.innerText = document.lifecycle__v || 'N/A';
 
             const documentTypeCell = row.insertCell(3);
-            documentTypeCell.innerText = document.document.type__v || 'N/A';
+            documentTypeCell.innerText = document.type__v || 'N/A';
 
             const documentStatusCell = row.insertCell(4);
-            documentStatusCell.innerText = document.document.status__v || 'N/A';
+            documentStatusCell.innerText = document.status__v || 'N/A';
         });
 
+        // Display the table
         dataTable.style.display = 'table';
 
     } catch (error) {
+        console.error('Search error:', error);
         errorMessage.innerText = error.message;
         dataTableBody.innerHTML = '';
         dataTable.style.display = 'none';
