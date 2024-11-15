@@ -9,6 +9,14 @@ function hideLoading() {
     document.getElementById('buffering-overlay').classList.add('hidden');
 }
 
+const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') { 
+            searchDocuments();
+        }
+    });
+
+
 window.onload = performLogin;
 
 
