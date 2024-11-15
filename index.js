@@ -130,11 +130,6 @@ async function searchDocuments() {
             const documentStatusCell = row.insertCell(4);
             documentStatusCell.innerText = document.status__v || 'N/A';
 
-            const deleteCell = row.insertCell(5);
-            deleteCell.innerHTML = `<button onclick="deleteDocument('${document.id}', this)" title="Delete" style="background: none; border: none; cursor: pointer;"><i class="fas fa-trash-alt" style="color: red;"></i></button>`;
-            
-            const updateCell = row.insertCell(6);
-            updateCell.innerHTML = `<button onclick="editDocument('${document.id}', '${document.name__v}', '${document.type__v}', '${document.status__v}')" title="Update" style="background: none; border: none; cursor: pointer;"><i class="fas fa-edit" style="color: green;"></i></button>`;
             
 
         });
