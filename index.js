@@ -1,6 +1,17 @@
 let sessionId = '';
 
+
+function showLoading() {
+    document.getElementById('buffering-overlay').classList.remove('hidden');
+}
+
+function hideLoading() {
+    document.getElementById('buffering-overlay').classList.add('hidden');
+}
+
 window.onload = performLogin;
+
+
 
 async function performLogin() {
     const username = 'prana.user4@partnersi-prana4life.com';
@@ -35,6 +46,7 @@ async function performLogin() {
 }
 
 async function searchDocuments() {
+    showLoading();
     const searchInput = document.getElementById('search-input').value.trim();
     const errorMessage = document.getElementById('error-message');
     const dataTable = document.getElementById('data-table');
@@ -47,11 +59,14 @@ async function searchDocuments() {
         dataTable.style.display = 'none';
         documentCount.innerText = ''; // Clear the document count if no input
         return;
+        hideLoading();
     }
 
     if (!sessionId) {
         errorMessage.innerText = 'You must log in first.';
         return;
+        hideLoading();
+
     }
 
     try {
@@ -114,5 +129,9 @@ async function searchDocuments() {
         errorMessage.innerText = error.message;
         dataTableBody.innerHTML = '';
         dataTable.style.display = 'none';
+    }
+    finally{
+            hideLoading();
+
     }
 }
